@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--标题栏-->
+    <include layout="@layout/titlebar"></include>
+    <!--FrameLayout帧布局-->
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+    <!--底部的RadioGroup-->
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:background="#11000000"
+        android:gravity="center_vertical">
+        <RadioButton
+            android:text="常用框架"
+            android:id="@+id/rb_common_frame"
+            android:drawableTop="@drawable/rd_common_frame_drawable_selecter"
+            style="@style/tab_radioButton_style" />
+        <RadioButton
+            android:text="第三方"
+            android:id="@+id/rb_thirdparty"
+            android:drawableTop="@drawable/rb_thirdparty_drawable_selecter"
+            style="@style/tab_radioButton_style" />
+        <RadioButton
+            android:text="自定义控件"
+            android:id="@+id/rb_custom"
+            android:drawableTop="@drawable/rb_custom_drawable_selecter"
+            style="@style/tab_radioButton_style" />
+        <RadioButton
+            android:text="其他"
+            android:id="@+id/rb_other"
+            android:drawableTop="@drawable/rb_other_drawable_selecter"
+            style="@style/tab_radioButton_style" />
+
+    </RadioGroup>
+</LinearLayout>
