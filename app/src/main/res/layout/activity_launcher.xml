@@ -13,12 +13,25 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:src="@drawable/atguigu_logo" />
-    <TextView
-        android:textSize="20sp"
-        android:textColor="@android:color/black"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/iv_icon"
-        android:text="尚硅谷Android世界..."
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_icon"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="尚硅谷Android世界..."
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
+
 </RelativeLayout>
