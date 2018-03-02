@@ -27,6 +27,8 @@ public class MainActivity extends FragmentActivity{
     private List<BaseFragment> mBaseFragment;
     //RadioGroup选中位置
     private int position;
+    //上次的Fragment
+    private Fragment mContext;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,22 +70,64 @@ public class MainActivity extends FragmentActivity{
             }
             //Fragment替换activity_main中间的相对布局区域R.id.fl_content
             //根据上面的position得到要显示的Fragment
-            BaseFragment fragment=getFragment();
-            //替换现有的Fragment
-            switchFragment(fragment);
+            BaseFragment to=getFragment();
+            //to替换现有的mContext
+            switchFragment(mContext,to);
         }
     }
 
     //切换Fragment
-    private void switchFragment(BaseFragment fragment) {
-        //1得到FragmentManager:v4包的FragmentManager
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        //2开启事务
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        //3替换
-        fragmentTransaction.replace(R.id.fl_content,fragment);
-        //4提交事务
-        fragmentTransaction.commit();
+//    private void switchFragment(BaseFragment fragment) {
+//        //1得到FragmentManager:v4包的FragmentManager
+//        FragmentManager fragmentManager=getSupportFragmentManager();
+//        //2开启事务
+//        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+//        //3替换
+//        fragmentTransaction.replace(R.id.fl_content,fragment);
+//        //4提交事务
+//        fragmentTransaction.commit();
+//    }
+
+    //优化切换Fragment
+    ///
+
+    private void switchFragment(Fragment from,Fragment to) {
+        //from是当前Fragment视图，to是下一个Fragment视图
+        //1判断不是同一个Fragment视图
+        if(from!=to){
+            //不同可以切换,当前替换成下一个视图
+            mContext=to;
+            //到FragmentManager
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            //得到事务
+            FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
+            //判断to是否添加过
+            if(!to.isAdded()){
+                //to没添加
+                //from隐藏
+                if(from!=null){
+                    fragmentTransaction.hide(from);
+                }
+                //添加to
+                if(to!=null){
+                    fragmentTransaction.add(R.id.fl_content,to).commit();
+                }
+            }else{
+                //to已添加
+                //from隐藏
+                if(from!=null){
+                    fragmentTransaction.hide(from);
+                }
+                //to显示
+                if(to!=null){
+                    fragmentTransaction.show(to).commit();
+                }
+            }
+        }else{
+            //相同，不操作
+            return;
+        }
     }
 
     //根据position得到
