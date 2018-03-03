@@ -1,13 +1,22 @@
 package cn.hohn.atguigu_code;
 
+        import android.Manifest;
+        import android.content.Intent;
+        import android.content.pm.PackageManager;
+        import android.net.Uri;
+        import android.os.Build;
         import android.os.Bundle;
+        import android.provider.Settings;
         import android.support.annotation.Nullable;
+        import android.support.v4.app.ActivityCompat;
         import android.support.v4.app.Fragment;
         import android.support.v4.app.FragmentActivity;
         import android.support.v4.app.FragmentManager;
         import android.support.v4.app.FragmentTransaction;
+        import android.support.v4.content.ContextCompat;
         import android.widget.RadioGroup;
         import android.widget.TextView;
+        import android.widget.Toast;
 
         import java.util.ArrayList;
         import java.util.List;
@@ -33,6 +42,7 @@ public class MainActivity extends FragmentActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //0android6.0以上权限
 
         //1初始化View
         initView();
@@ -41,7 +51,6 @@ public class MainActivity extends FragmentActivity{
         //3RadioGroup设置监听：RadioButton切换
         setListener();
     }
-
     private void setListener() {
         radioGroup.setOnCheckedChangeListener(new MyCheckListener());
         //默认选择第一个RadioButon常用框架
