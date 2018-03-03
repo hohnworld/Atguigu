@@ -7,6 +7,7 @@ package cn.hohn.atguigu_code;
         import android.support.v4.app.FragmentManager;
         import android.support.v4.app.FragmentTransaction;
         import android.widget.RadioGroup;
+        import android.widget.TextView;
 
         import java.util.ArrayList;
         import java.util.List;
@@ -32,6 +33,7 @@ public class MainActivity extends FragmentActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //1初始化View
         initView();
         //2初始化Fragment

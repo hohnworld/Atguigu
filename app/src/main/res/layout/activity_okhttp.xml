@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="尚硅谷知识库"
+            android:textSize="20dp"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_get_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="get、post请求"/>
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="显示请求结果"/>
+</LinearLayout>

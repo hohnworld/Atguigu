@@ -1,5 +1,6 @@
 package cn.hohn.atguigu_code.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cn.hohn.atguigu_code.R;
+import cn.hohn.atguigu_code.activity.OKHTTPActivity;
 import cn.hohn.atguigu_code.adapter.CommonFrameFragmentAdapter;
 import cn.hohn.atguigu_code.base.BaseFragment;
 
@@ -38,7 +40,16 @@ public class CommonFrameFragment extends BaseFragment{
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(mContext, "data="+datas[i], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "data="+datas[i], Toast.LENGTH_SHORT).show();
+                //获取当前点击的listview条目
+                String item=datas[i];
+                mContext.startActivity(new Intent(mContext,OKHTTPActivity.class));
+
+                //点击的是第一个okhttp
+                if(item.trim().toLowerCase().toString()=="okhttp"){
+                    //打开okhttp的页面
+                    mContext.startActivity(new Intent(mContext,OKHTTPActivity.class));
+                }
             }
         });
         return view;
