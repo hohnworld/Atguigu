@@ -13,6 +13,7 @@ import cn.hohn.atguigu_code.R;
 import cn.hohn.atguigu_code.activity.OKHTTPActivity;
 import cn.hohn.atguigu_code.adapter.CommonFrameFragmentAdapter;
 import cn.hohn.atguigu_code.base.BaseFragment;
+import cn.hohn.atguigu_code.xutils3.XUtils3MainActivity;
 
 /**
  * 作者：吴红华
@@ -43,12 +44,15 @@ public class CommonFrameFragment extends BaseFragment{
                 //Toast.makeText(mContext, "data="+datas[i], Toast.LENGTH_SHORT).show();
                 //获取当前点击的listview条目
                 String item=datas[i];
-                mContext.startActivity(new Intent(mContext,OKHTTPActivity.class));
-
                 //点击的是第一个okhttp
-                if(item.trim().toLowerCase().toString()=="okhttp"){
+                if(item.trim().toLowerCase().toString().equals("okhttp")){
                     //打开okhttp的页面
                     mContext.startActivity(new Intent(mContext,OKHTTPActivity.class));
+                }else if(item.trim().toLowerCase().toString().equals("xutils3")){
+                    //打开xutils3的页面XUtils3MainActivity
+                    mContext.startActivity(new Intent(mContext,XUtils3MainActivity.class));
+                }else {
+                    Toast.makeText(mContext, "居然都不匹配", Toast.LENGTH_SHORT).show();
                 }
             }
         });

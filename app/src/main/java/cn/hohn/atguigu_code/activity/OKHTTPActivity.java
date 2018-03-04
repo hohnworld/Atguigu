@@ -31,6 +31,8 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.hohn.atguigu_code.MainActivity;
 import cn.hohn.atguigu_code.R;
@@ -78,6 +80,7 @@ public class OKHTTPActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_okhttp);
         Log.e(TAG, path);
+        Log.e(TAG, String.valueOf(Environment.getExternalStorageDirectory()));
         //初始化按钮文本显示
         btn_get_post = (Button) findViewById(R.id.btn_get_post);
         tv_result = (TextView) findViewById(R.id.tv_result);
@@ -91,6 +94,9 @@ public class OKHTTPActivity extends Activity implements View.OnClickListener {
         switch (view.getId()) {
             //okhttp原生get、post请求
             case R.id.btn_get_post:
+               multiFileUpload();
+
+                break;
 
                 //按钮btn_get_post点击执行代码
 //                getDataFromGet();
@@ -124,50 +130,73 @@ public class OKHTTPActivity extends Activity implements View.OnClickListener {
 //                    alert.show();
 //                }
                 //避免重复点击下载，每次都去下载
-                if (downloadProgressing > 0) {
-                    Log.e(TAG, "当前的downloadProgressing线程###############" + Thread.currentThread().getName());
-                    Toast.makeText(this, "下载中...", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                //②判断是否版本是否大于等于6.0
-                if (Build.VERSION.SDK_INT >= 23) {
-                    //③判断是否有权限：应用程序权限(状态：未申请、允许、拒绝)
-                    if (ContextCompat.checkSelfPermission(OKHTTPActivity.this, WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(OKHTTPActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                            //状态：拒绝
-                            Toast.makeText(OKHTTPActivity.this, "请授权", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent();
-                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                            Uri uri = Uri.fromParts("package", getPackageName(), null);
-                            intent.setData(uri);
-                            startActivity(intent);
-                        } else {
-                            //状态：未申请
-                            ActivityCompat.requestPermissions(OKHTTPActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
-                        }
-                    }
-                    //状态：允许
-                    else {
-                        if (okhttpUtilsDownload()) {
-                            Toast.makeText(OKHTTPActivity.this, "写入文件成功", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(OKHTTPActivity.this, "写入文件失败1", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-                //android6.0以下
-                else {
-                    if (okhttpUtilsDownload()) {
-                        Toast.makeText(OKHTTPActivity.this, "写入文件成功", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(OKHTTPActivity.this, "写入文件失败2", Toast.LENGTH_SHORT).show();
-                    }
-                }
+//                if (downloadProgressing > 0) {
+//                    Log.e(TAG, "当前的downloadProgressing线程###############" + Thread.currentThread().getName());
+//                    Toast.makeText(this, "下载中...", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                //②判断是否版本是否大于等于6.0
+//                if (Build.VERSION.SDK_INT >= 23) {
+//                    //③判断是否有权限：应用程序权限(状态：未申请、允许、拒绝)
+//                    if (ContextCompat.checkSelfPermission(OKHTTPActivity.this, WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                        if (ActivityCompat.shouldShowRequestPermissionRationale(OKHTTPActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                            //状态：拒绝
+//                            Toast.makeText(OKHTTPActivity.this, "请授权", Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent();
+//                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                            intent.setData(uri);
+//                            startActivity(intent);
+//                        } else {
+//                            //状态：未申请
+//                            ActivityCompat.requestPermissions(OKHTTPActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
+//                        }
+//                    }
+//                    //状态：允许
+//                    else {
+//                        if (okhttpUtilsDownload()) {
+//                            Toast.makeText(OKHTTPActivity.this, "写入文件成功", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(OKHTTPActivity.this, "写入文件失败1", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
+//                //android6.0以下
+//                else {
+//                    if (okhttpUtilsDownload()) {
+//                        Toast.makeText(OKHTTPActivity.this, "写入文件成功", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(OKHTTPActivity.this, "写入文件失败2", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
 
-                break;
+                //break;
         }
     }
 
+    //上传文件
+    public void multiFileUpload()
+    {
+        File file = new File(Environment.getExternalStorageDirectory(), "aa.png");
+        File file2 = new File(Environment.getExternalStorageDirectory(), "bb.jpg");
+        if (!file.exists()||!file2.exists())
+        {
+            Toast.makeText(OKHTTPActivity.this, "文件不存在，请修改文件路径", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Map<String, String> params = new HashMap<>();
+        params.put("username", "张鸿洋");
+        params.put("password", "123");
+
+        String url = "http://hohn.cn/crh123/test/fileupload.php";
+        OkHttpUtils.post()//
+                .addFile("attach", "aa.png", file)//
+                //.addFile("attach", "bb.jpg", file2)//
+                .url(url)
+                .params(params)//
+                .build()//
+                .execute(new MyStringCallback());
+    }
     //okhttp-Utils下载文件
     public boolean okhttpUtilsDownload() {
         Log.e(TAG, "当前的线程###############" + Thread.currentThread().getName());
@@ -288,7 +317,7 @@ public class OKHTTPActivity extends Activity implements View.OnClickListener {
 
         @Override
         public void inProgress(float progress, long total, int id) {
-            Log.e(TAG, "inProgress:" + progress);
+            //Log.e(TAG, "inProgress:" + progress);
 // mProgressBar.setProgress((int) (100 * progress));
         }
     }

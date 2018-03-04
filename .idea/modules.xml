@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/okhttputils/okhttputils.iml" filepath="$PROJECT_DIR$/okhttputils/okhttputils.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample-okhttp/sample-okhttp.iml" filepath="$PROJECT_DIR$/sample-okhttp/sample-okhttp.iml" />
       <module fileurl="file://$PROJECT_DIR$/ws.iml" filepath="$PROJECT_DIR$/ws.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xUtils3_sample/xUtils3_sample  .iml" filepath="$PROJECT_DIR$/xUtils3_sample/xUtils3_sample  .iml" />
+      <module fileurl="file://$PROJECT_DIR$/xutils/xutils.iml" filepath="$PROJECT_DIR$/xutils/xutils.iml" />
     </modules>
   </component>
 </project>
